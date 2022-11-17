@@ -1,0 +1,16 @@
+.user-list {
+  max-width: 360px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 375px) {
+  .user-list {
+    background-color: aquamarine;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 375px) {
+  .user-list {
+    background-color: aqua;
+  }
+}
