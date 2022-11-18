@@ -8,11 +8,10 @@ import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Collapse from '@mui/material/Collapse';
-
+import { createUser } from '../utils/createUser';
 import UserStore from '../stores/UserStore';
 import style from '../styles/userForm.module.scss';
 
@@ -47,21 +46,12 @@ function UserForm() {
     }
     setOpen(false);
     setShowAlert(false);
-    let user = {
+    const data = await createUser({
       name: UserStore.name,
       gender: UserStore.gender,
       links: toJS(UserStore.userLinks),
-    };
-
-    try {
-      const response = await axios.post(
-        'http://localhost:5000/api/users',
-        user,
-      );
-      UserStore.addUserToList(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    });
+    UserStore.addUserToList(data);
   };
 
   return (

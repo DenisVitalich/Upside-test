@@ -1,8 +1,15 @@
 import { makeAutoObservable } from 'mobx';
+import axios from 'axios';
+
+interface IUser {
+  name: string;
+  gender: number;
+  links?: string[];
+}
 
 export class UserStore {
   userLinks: any[] = [];
-  userList: string[] = [];
+  userList: IUser[] = [];
   name: string = '';
   gender: number = 1;
 
@@ -14,11 +21,11 @@ export class UserStore {
     this.userLinks = [...this.userLinks, link];
   }
 
-  setUserList(users: string[]) {
+  setUserList(users: IUser[]) {
     this.userList = [...users];
   }
 
-  addUserToList(user: any) {
+  addUserToList(user: IUser) {
     this.userList.push(user);
   }
 
@@ -28,6 +35,12 @@ export class UserStore {
 
   setGender(gender: number) {
     this.gender = gender;
+  }
+
+  async getUsers() {
+    const { data } = await axios.get('http://localhost:5000/api/users');
+    this.userList = data;
+    return data;
   }
 }
 

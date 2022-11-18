@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://admin:admin@cluster0.bp3c9lq.mongodb.net/upside-test?retryWrites=true&w=majority',
-    ),
-    UserModule,
-  ],
+  imports: [MongooseModule.forRoot(process.env.MONGO_URL), UserModule],
 })
 export class AppModule {}
